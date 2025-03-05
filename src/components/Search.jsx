@@ -1,6 +1,11 @@
-import React from 'react'
+import {useCallback} from 'react'
 
 const Search = ({ searchTerm, setSearchTerm }) => {
+
+    const handleSetSearchTerm = useCallback((evt) => {
+        setSearchTerm(evt.target.value);
+    }, [setSearchTerm])
+
   return (
     <div className="search">
       <div>
@@ -10,7 +15,7 @@ const Search = ({ searchTerm, setSearchTerm }) => {
           type="text"
           placeholder="Search through thousands of movies"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleSetSearchTerm}
         />
       </div>
     </div>

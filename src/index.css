@@ -140,6 +140,20 @@
       @apply text-gray-100 font-medium text-base;
     }
   }
+
+  .movie-details {
+    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
+
+    & h3 {
+      @apply text-white font-bold text-base h-auto w-[500px] mb-2;
+    }
+
+    & .content {
+      @apply mt-2 flex flex-row items-center flex-wrap gap-2;
+    }
+  }
+
+
 }
 
 @utility text-gradient {
