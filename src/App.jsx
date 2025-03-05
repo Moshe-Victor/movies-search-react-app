@@ -146,30 +146,17 @@ const App = () => {
                             ) : (
                                 <ul>
                                     {movieList.map((movie) => (
-                                        // <MovieCard key={movie.id} movie={movie} setSelectedMovieId={setSelectedMovieId}/>
-                                        <MovieCard key={movie.id} movie={movie} openDialog={openDialog}/>
+                                            <MovieCard key={movie.id} movie={movie} openDialog={openDialog}/>
                                     ))}
                                 </ul>
                             )}
                         </section>
                     </div>
-
-                    {/*{selectedMovieId && <MovieDetails ref={movieDetailsRef} // attach the ref here*/}
-                    {/*                                  selectedMovieId={selectedMovieId} movieList={movieList}/>}*/}
-
-
                      <Dialog isOpen={!!selectedMovie} onClose={closeDialog}>
                          {selectedMovie && (
-                             // <>
-                             //     <span className="font-bold mb-2">{selectedMovie.title}</span>
-                             //     <p>{selectedMovie.overview}</p>
-                             // </>
-
                              <MovieDetails selectedMovie={selectedMovie}/>
-
                          )}
                      </Dialog>
-
                 </div>
             </div>
         </main>

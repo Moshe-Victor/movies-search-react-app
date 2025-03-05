@@ -139,6 +139,10 @@
     & .content .year {
       @apply text-gray-100 font-medium text-base;
     }
+
+    & img {
+      @apply cursor-pointer;
+    }
   }
 
   .movie-details {
