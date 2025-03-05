@@ -5,6 +5,7 @@ import MovieCard from './components/MovieCard.jsx'
 import {useDebounce} from 'react-use'
 import {getTrendingMovies, updateSearchCount} from './appwrite.js'
 import MovieDetails from "./components/MovieDetails.jsx";
+import {Dialog} from "./components/Dialog.jsx";
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 
@@ -27,8 +28,17 @@ const App = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [trendingMovies, setTrendingMovies] = useState([]);
-    const [selectedMovieId, setSelectedMovieId] = useState(0);
+     // const [selectedMovieId, setSelectedMovieId] = useState(0);
+    const [selectedMovie, setSelectedMovie] = useState(null);
     const movieDetailsRef = useRef(null);
+
+    const openDialog = (movie) => {
+        setSelectedMovie(movie)
+    }
+
+    const closeDialog = () => {
+        setSelectedMovie(null)
+    }
 
     // Debounce the search term to prevent making too many API requests
     // by waiting for the user to stop typing for 500ms
@@ -89,13 +99,13 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        if (selectedMovieId && movieDetailsRef.current) {
+        if (selectedMovie && movieDetailsRef.current) {
             // You can also scroll to MovieDetails if needed
               movieDetailsRef.current.scrollIntoView({behavior: 'smooth', block: 'start'});
             // Or just set focus if you want the component to be visually focused
             //   movieDetailsRef.current.focus();
         }
-    }, [selectedMovieId]);
+    }, [selectedMovie]);
 
     return (
         <main>
@@ -136,15 +146,30 @@ const App = () => {
                             ) : (
                                 <ul>
                                     {movieList.map((movie) => (
-                                        <MovieCard key={movie.id} movie={movie} setSelectedMovieId={setSelectedMovieId}/>
+                                        // <MovieCard key={movie.id} movie={movie} setSelectedMovieId={setSelectedMovieId}/>
+                                        <MovieCard key={movie.id} movie={movie} openDialog={openDialog}/>
                                     ))}
                                 </ul>
                             )}
                         </section>
                     </div>
 
-                    {selectedMovieId && <MovieDetails ref={movieDetailsRef} // attach the ref here
-                                                      selectedMovieId={selectedMovieId} movieList={movieList}/>}
+                    {/*{selectedMovieId && <MovieDetails ref={movieDetailsRef} // attach the ref here*/}
+                    {/*                                  selectedMovieId={selectedMovieId} movieList={movieList}/>}*/}
+
+
+                     <Dialog isOpen={!!selectedMovie} onClose={closeDialog}>
+                         {selectedMovie && (
+                             // <>
+                             //     <span className="font-bold mb-2">{selectedMovie.title}</span>
+                             //     <p>{selectedMovie.overview}</p>
+                             // </>
+
+                             <MovieDetails selectedMovie={selectedMovie}/>
+
+                         )}
+                     </Dialog>
+
                 </div>
             </div>
         </main>
